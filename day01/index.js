@@ -1,28 +1,23 @@
 const fs = require('fs');
-const file = fs.readFileSync('./input').toString().split("\n");
-
-const isPrime = num => {
-    for(let i = 2, s = Math.sqrt(num); i <= s; i++)
-        if(num % i === 0) return false; 
-    return num > 1;
-}
+const file = fs.readFileSync('./input.txt').toString().split("\n").map(numStr => parseInt(numStr));
 
 function getSolutionPart1() {
     sum = 0;
-    for(i = 0; i < file.length; i++) {
-        x = parseInt(file[i]);
-        if(isPrime(x)) sum += x * i;
+    for(i = 1; i < file.length; i++) {
+        if(file[i] > file[i - 1]) sum++;
     }
     return sum;
 }
 
 function getSolutionPart2() {
-    sum = 0
-    for(i = 0; i < file.length; i++) {
-        x = parseInt(file[i]);
-        if(!isPrime(x)) sum += x * ((i % 2) ? -1 : 1);
+    totalInc = 0;
+    prevSum = file[0] + file[1] + file[2];
+    for(i = 1; i < file.length; i++) {
+        currSum = file[i] + file[i + 1] + file[i + 2];
+        if(currSum > prevSum) totalInc++;
+        prevSum = currSum;
     }
-    return sum;
+    return totalInc;
 }
 
 const part = process.env.part || "part1";
