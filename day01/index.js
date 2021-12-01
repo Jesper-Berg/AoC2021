@@ -2,22 +2,13 @@ const fs = require('fs');
 const file = fs.readFileSync('./input.txt').toString().split("\n").map(numStr => parseInt(numStr));
 
 function getSolutionPart1() {
-    sum = 0;
-    for(i = 1; i < file.length; i++) {
-        if(file[i] > file[i - 1]) sum++;
-    }
-    return sum;
+    return file.filter((num, i) => num > file[i - 1]).length
 }
 
+const sumWindow = i => file[i] + file[i + 1] + file[i + 2];
+
 function getSolutionPart2() {
-    totalInc = 0;
-    prevSum = file[0] + file[1] + file[2];
-    for(i = 1; i < file.length - 2; i++) {
-        currSum = file[i] + file[i + 1] + file[i + 2];
-        if(currSum > prevSum) totalInc++;
-        prevSum = currSum;
-    }
-    return totalInc;
+    return file.filter((num, i) => sumWindow(i) > sumWindow(i - 1)).length
 }
 
 const part = process.env.part || "part1";
