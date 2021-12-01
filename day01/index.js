@@ -12,7 +12,7 @@ function getSolutionPart1() {
 function getSolutionPart2() {
     totalInc = 0;
     prevSum = file[0] + file[1] + file[2];
-    for(i = 1; i < file.length; i++) {
+    for(i = 1; i < file.length - 2; i++) {
         currSum = file[i] + file[i + 1] + file[i + 2];
         if(currSum > prevSum) totalInc++;
         prevSum = currSum;
